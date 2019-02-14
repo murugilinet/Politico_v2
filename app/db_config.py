@@ -22,9 +22,37 @@ class Db:
             username character varying(100) NOT NULL,
             email character varying(100) NOT NULL,
             phonenumber character varying(10) NOT NULL,
-            password character varying(150) NOT NULL,
+            password character varying(150) NOT NULL
             )"""
-        query = [users]
-        self.cursor.execute(query)
+        
+        offices = """CREATE TABLE IF NOT EXISTS offices(
+            office_id serial PRIMARY KEY NOT NULL,
+            name character varying(100) NOT NULL,
+            age character varying(100) NOT NULL,
+            Office_type character varying(100) NOT NULL,
+            education character varying(100) NOT NULL
+            )"""
+        
+        parties = """CREATE TABLE IF NOT EXISTS parties(
+            party_id serial PRIMARY KEY NOT NULL,
+            first_name character varying(100) NOT NULL,
+            abbreviations character varying(100) NOT NULL,
+            chairperson character varying(100) NOT NULL,
+            members character varying(100) NOT NULL,
+            address character varying(10) NOT NULL,
+            logoUrl character varying(150) NOT NULL
+        
+            )"""
+        queries = [users,offices,parties]
+      
+        for query in queries:
+            if query:
+                self.cursor.execute(query)
+        self.connect.commit()
+
+    def destroy_tables(self):
+        self.cursor.execute("DROP TABLE IF EXISTS users")
+        self.cursor.execute("DROP TABLE IF EXISTS parties")
+        self.cursor.execute("DROP TABLE IF EXISTS offices")
         self.connect.commit()
         self.connect.close()

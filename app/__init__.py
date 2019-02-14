@@ -1,13 +1,13 @@
-from flask import Flask, Blueprint, jsonify, request
-from instance.config import app_config
+from flask import Flask, Blueprint, jsonify, request, current_app
+from instance.config import Config, app_config
 
-# from .api import version_one as v1 
+from .api.v2.views import version_two as v2 
 
 
-def create_app(config_name='testing'):
+def create_app(config_name):
     app = Flask(__name__, instance_relative_config=True)
+    app.register_blueprint(v2)
     app.url_map.strict_slashes = False
-    app.config.from_object(app_config['testing'])
-    app.config.from_pyfile('config.py')
-    #app.register_blueprint(v1)
+    app.config.from_object(app_config[config_name])
+    
     return app
