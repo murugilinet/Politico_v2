@@ -22,7 +22,7 @@ class Db:
             username character varying(100) NOT NULL,
             email character varying(100) NOT NULL,
             phonenumber character varying(10) NOT NULL,
-            password character varying(150) NOT NULL,
+            password character varying(150) NOT NULL
             )"""
         
         offices = """CREATE TABLE IF NOT EXISTS offices(
@@ -40,7 +40,7 @@ class Db:
             chairperson character varying(100) NOT NULL,
             members character varying(100) NOT NULL,
             address character varying(10) NOT NULL,
-            logoUrl character varying(150) NOT NULL,
+            logoUrl character varying(150) NOT NULL
         
             )"""
         queries = [users,offices,parties]
