@@ -4,7 +4,7 @@ class Config(object):
     """Parent configuration class."""
     DEBUG = False
     CSRF_ENABLED = True
-
+    JWT_SECRET_KEY = os.getenv('JWT_SECRET_KEY')
 
 class DevelopmentConfig(Config):
     """Configurations for Development.os.getenv gets the variables in development environment"""
