@@ -9,7 +9,7 @@ class PartyModel(Db):
     def save_party(self,name,abbreviations,chairperson,members,address,logoUrl):
         
         self.cursor.execute(
-            "INSERT INTO parties(name,abbreviations,chairperson,members,address,logoUrl)VALUES (%s,%s,%s,%s,%s,%s)",
+            "INSERT INTO parties(first_name,abbreviations,chairperson,members,address,logoUrl)VALUES (%s,%s,%s,%s,%s,%s)",
             (name,abbreviations,chairperson,members,address,logoUrl))
         self.connect.commit()
   
@@ -19,7 +19,7 @@ class PartyModel(Db):
         return party_list
   
     def find_by_id(self,party_id):     
-        self.cursor.execute("SELECT * from parties WHERE party_id {}".format(party_id))
+        self.cursor.execute("SELECT * from parties WHERE party_id = {}".format(party_id))
         party= self.cursor.fetchall()
         return party
     
