@@ -55,7 +55,7 @@ class Offices(Resource):
                 'Message':'Name field too short'
                  }),411)
 
-        self.dt.save_office
+        self.dt.save_office(office['name'],office['age'],office['office_type'],office['education'])
       
         return make_response(jsonify({
                 'Message': 'Successfully saved',

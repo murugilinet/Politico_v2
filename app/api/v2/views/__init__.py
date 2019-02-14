@@ -13,5 +13,5 @@ api.add_resource (Office, '/offices/<int:office_id>')
 api.add_resource (Parties, '/parties')
 api.add_resource (Party, '/parties/<int:party_id>')
 api.add_resource (Users, '/auth/signup')
-api.add_resource (LogIn, '/auth/signup')
+api.add_resource (LogIn, '/auth/login')
 
