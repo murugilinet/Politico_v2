@@ -26,13 +26,13 @@ class OfficeModel(Db):
         return office_list
   
     def find_by_id(self,office_id):     
-        self.cursor.execute("SELECT * from offices WHERE party_id {}".format(office_id))
+        self.cursor.execute("SELECT * from offices WHERE office_id = {}".format(office_id))
         party= self.cursor.fetchall()
         return party
     
     def delete_by_id(self,office_id): 
         self.cursor.find_by_id(office_id)    
-        self.cursor.execute("DELETE * from offices WHERE office_id {}".format(office_id))
+        self.cursor.execute("DELETE * from offices WHERE office_id = {}".format(office_id))
         self.connect.commit()
     
 
