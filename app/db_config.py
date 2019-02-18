@@ -22,7 +22,8 @@ class Db:
             username character varying(100) NOT NULL,
             email character varying(100) NOT NULL,
             phonenumber character varying(10) NOT NULL,
-            password character varying(150) NOT NULL
+            password character varying(150) NOT NULL,
+            is_admin BOOLEAN DEFAULT FALSE
             )"""
         
         offices = """CREATE TABLE IF NOT EXISTS offices(
@@ -43,7 +44,15 @@ class Db:
             logoUrl character varying(150) NOT NULL
         
             )"""
-        queries = [users,offices,parties]
+
+        candidates = """CREATE TABLE IF NOT EXISTS candidates(
+            candidate_id serial PRIMARY KEY NOT NULL,
+            name character varying(100) NOT NULL,
+            office_id INTEGER NOT NULL,
+            party_id INTEGER NOT NULL
+         )"""
+         
+        queries = [users,offices,parties,candidates]
       
         for query in queries:
             if query:

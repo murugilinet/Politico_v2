@@ -8,7 +8,7 @@ class UserModel(Db):
     '''This class has queries that access and manipulate data in users table in database'''
 
     def __init__(self):
-        super().__init__()
+     super().__init__()
 
     def save_user(self, first_name, last_name, email, phone_number, username, password):
         self.cursor.execute(
@@ -30,7 +30,9 @@ class UserModel(Db):
     def get_id(self, username):
         self.cursor.execute(
             "SELECT user_id FROM users WHERE username='{}'".format(username))
-        user_id = self.cursor.fetchone()
+        row= self.cursor.fetchone()
+        if row:
+            user_id = row.get('user_id')
         return user_id
 
     def generate_jwt_token(self, username):
@@ -64,6 +66,34 @@ class UserModel(Db):
 
     def confirmpassword(self, password, confirm_password):
         return check_password_hash(password, confirm_password)
+    
+    def promote_user_to_admin(self):
+        self.cursor.execute(
+           "UPDATE users SET is_admin = 'true'  where username ='admin'")
+        self.connect.commit()
+
+    def get_admin_by_id(self,user_id):
+        self.cursor.execute(
+          "SElECT * from users WHERE user_id = {} and username = 'admin'".format(user_id)
+        )
+        user = self.cursor.fetchall()
+        return user
+
+    def create_admin(self):
+        pswrd= generate_password_hash('1234')
+
+        if self.get_user_by_username('admin'):
+            return 'Admin already exists!'
+        self.save_user('linet', 'murugi','amanadmin@gmail.com', '0720243803','admin', pswrd)
+        self.promote_user_to_admin()
+
+    def iamadmin(self, user_id):
+        self.cursor.execute(
+            "SELECT * from users WHERE user_id = {} and is_admin = 'true'".format(user_id)
+        )
+        user = self.cursor.fetchall()
+        self.promote_user_to_admin()
+        return user
 
     def valid_digits(self, data):
         if data.isdigit():
@@ -77,6 +107,6 @@ class UserModel(Db):
 
     def valid_email(self, email):
         valid = re.match(
-            "(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)", email.strip())
+          "(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)", email.strip())
         if valid is None:
             return False
