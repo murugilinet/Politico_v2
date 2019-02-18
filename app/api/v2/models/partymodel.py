@@ -26,18 +26,17 @@ class PartyModel(Db):
     def find_by_name(self,name):  
         '''solves the problem of duplication of parties'''
            
-        self.cursor.execute("SELECT * from parties WHERE name '{}'".format(name))
+        self.cursor.execute("SELECT * from parties WHERE first_name = '{}'".format(name))
         party= self.cursor.fetchall()
-        if party:
-            return False
+        return party
     
     def delete_by_id(self,party_id): 
-        self.cursor.find_by_id(party_id)    
-        self.cursor.execute("DELETE * from parties WHERE party_id {}".format(party_id))
+        self.find_by_id(party_id) 
+        self.cursor.execute("DELETE FROM parties WHERE party_id = {}".format(party_id))
         self.connect.commit()
     
     def updatename(self,party_id,name):   
-        self.cursor.execute("UPDATE * parties SET name = '{}' WHERE party_id {}".format(name,party_id))
+        self.cursor.execute("UPDATE parties SET first_name = '{}' WHERE party_id = {}".format(name,party_id))
         self.connect.commit()
 
     def valid(self,data):
@@ -46,9 +45,8 @@ class PartyModel(Db):
         return False
     
     def valid_type(self,data):
-        if data.isalpha():
-            return True
-        return False
+        if data.isspace() or data == "":
+           return False
     
     def valid_digits(self,data):
         if data.isdigit():

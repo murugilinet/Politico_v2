@@ -1,7 +1,8 @@
 from flask import Flask, request, make_response, jsonify
 from flask_restful import Resource, reqparse
 from app.api.v2.models.partymodel import PartyModel
-
+from app.api.v2.models.usermodel import UserModel
+from flask_jwt_extended import jwt_required,get_jwt_identity
 
 parser2 = reqparse.RequestParser()
 parser2.add_argument(
@@ -26,65 +27,10 @@ parser2.add_argument(
 
 
 class Parties(Resource):
-    # This class and methods creates endpoints that work on several parties
+    # This class and methods creates endpoints that allow users to view all parties
     def __init__(self):
         self.dt = PartyModel()
-
-    def post(self):
-        data = parser2.parse_args()
-
-        party = {
-            'name': data['name'],
-            'abbreviations': data['abbreviations'],
-            'chairperson': data['chairperson'],
-            'members': data['members'],
-            'address': data['address'],
-            'logoUrl': data['logoUrl']
-        }
-
-        response = make_response(jsonify({
-            'Message': 'Correct input required',
-        }), 400)
-
-        if self.dt.find_by_name == False:
-            return make_response(jsonify({
-                'Message': 'Party already exists'
-            }), 401)
-
-        if self.dt.valid_type(data['name']) == False:
-            return response
-
-        if self.dt.valid_type(data['abbreviations']) == False:
-            return response
-
-        if self.dt.valid_type(data['chairperson']) == False:
-            return response
-
-        if self.dt.valid_digits(data['members']) == False:
-            return response
-
-        if self.dt.valid(data['address']) == False:
-            return response
-
-        if self.dt.valid_type(data['logoUrl']) == False:
-            return response
-
-        elif self.dt.length_long(data['name']) == False:
-            return make_response(jsonify({
-                'Message': 'Name field too short'
-            }), 411)
-
-        elif self.dt.length_short(data['abbreviations']) == False:
-            return make_response(jsonify({
-                'Message': 'abbreviations too long'
-            }), 411)
-        self.dt.save_party(party['name'], party['abbreviations'], party['chairperson'],
-                           party['members'], party['address'], party['logoUrl'])
-
-        return make_response(jsonify({
-            'Message': 'Successfully saved',
-            'data': party
-        }), 201)
+    
 
     def get(self):
 
@@ -102,10 +48,10 @@ class Parties(Resource):
 
 
 class Party(Resource):
-    # class and methods creates endpoints that apply to a single party only
+    # class and methods creates endpoints that allow users to view a single party using the party id
     def __init__(self):
         self.dt = PartyModel()
-
+    @jwt_required
     def get(self, party_id):
         party = self.dt.find_by_id(party_id)
         if not party:
@@ -118,28 +64,87 @@ class Party(Resource):
             'data': party
         }), 200)
 
+
+class AdminParties(Resource):
+    #creates an endpoint that allows the admin to create a party
+    def __init__(self):
+        self.dt = PartyModel()
+        self.admin = UserModel()
+    @jwt_required
+    def post(self):
+        data = parser2.parse_args()
+        name = data['name']
+        abbreviations = data['abbreviations']
+        chairperson =data['chairperson']
+        members = data['members']
+        address = data['address']
+        logoUrl =data['logoUrl']
+
+        if self.admin.iamadmin(get_jwt_identity()):
+            return make_response(jsonify({'Error': 'You are not an admin!'}), 403)
+
+        if self.dt.find_by_name(name):
+            return make_response(jsonify({'Message': 'Party already exists'}), 401)
+
+        if self.dt.valid_type(name) == False:
+            return make_response(jsonify({ 'Message': 'Name input required'}), 400)
+
+        if self.dt.valid_type(abbreviations) == False:
+            return make_response(jsonify({ 'Message': 'abbreviations input required'}), 400)
+
+        if self.dt.valid_type(chairperson) == False:
+            return make_response(jsonify({ 'Message': 'chairperson input required'}), 400)
+
+        if self.dt.valid_digits(members) == False:
+            return make_response(jsonify({ 'Message': 'members input required'}), 400)
+
+        if self.dt.valid(address) == False:
+            return make_response(jsonify({ 'Message': 'address input required'}), 400)
+
+        if self.dt.valid_type(logoUrl) == False:
+            return make_response(jsonify({ 'Message': 'logo input required'}), 400)
+
+        if self.dt.length_long(name) == False:
+            return make_response(jsonify({'Message': 'Name field too short'}), 411)
+
+        if self.dt.length_short(abbreviations) == False:
+            return make_response(jsonify({'Message': 'abbreviations too long'}), 411)
+        self.dt.save_party(name,abbreviations,chairperson,members,address,logoUrl)
+        return make_response(jsonify({'Message': 'Successfully saved'}), 201)
+
+
+class AdminParty(Resource):
+    #creates endpoints that allow adminuser to delete and edit a party using the party id
+    def __init__(self):
+        self.dt = PartyModel()
+        self.admin = UserModel()
+
+    @jwt_required
     def delete(self, party_id):
+        if self.admin.iamadmin(get_jwt_identity()):
+            return make_response(jsonify({'Error': 'You are not an admin!'}), 403)
         party = self.dt.find_by_id(party_id)
         if party:
             self.dt.delete_by_id(party_id)
             return make_response(jsonify({
                 'Message': 'Party successfully deleted',
-                'data': party
             }), 200)
 
         return make_response(jsonify({
             'Message': 'Party not found',
         }), 404)
 
+    @jwt_required
     def patch(self, party_id):
+        if self.admin.iamadmin(get_jwt_identity()):
+            return make_response(jsonify({'Error': 'You are not an admin!'}), 403)
         data = parser2.parse_args()
         name = data['name']
         party = self.dt.find_by_id(party_id)
         if party:
             self.dt.updatename(party_id, name)
             return make_response(jsonify({
-                'Message': 'party successfully updated',
-                'data': party
+                'Message': 'party successfully updated' 
             }), 200)
 
         return make_response(jsonify({

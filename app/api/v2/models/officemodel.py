@@ -9,9 +9,16 @@ class OfficeModel(Db):
     def save_office(self,name,age,office_type,education):
         
         self.cursor.execute(
-            "INSERT INTO offices(name,age,office_type,education)VALUES (%s,%s,%s,%s,%s,%s)",
+            "INSERT INTO offices(name,age,office_type,education)VALUES (%s, %s, %s, %s)",
             (name,age,office_type,education))
         self.connect.commit()
+  
+    def find_by_name(self,name):  
+        '''solves the problem of duplication of offices'''
+           
+        self.cursor.execute("SELECT * from offices WHERE name = '{}'".format(name))
+        office = self.cursor.fetchall()
+        return office
   
     def get_all(self):
         self.cursor.execute("SELECT * from offices")
@@ -19,7 +26,7 @@ class OfficeModel(Db):
         return office_list
   
     def find_by_id(self,office_id):     
-        self.cursor.execute("SELECT * from parties WHERE party_id {}".format(office_id))
+        self.cursor.execute("SELECT * from offices WHERE party_id {}".format(office_id))
         party= self.cursor.fetchall()
         return party
     
@@ -30,14 +37,13 @@ class OfficeModel(Db):
     
 
     def valid(self,data):
-        if data.isalnum:
+        if data.isalnum():
             return True
         return False
     
     def valid_type(self,data):
-        if data.isalpha():
-            return True
-        return False
+        if data.isspace() or data == "":
+           return False
     
     def valid_digits(self,data):
         if data.isdigit():
@@ -50,4 +56,7 @@ class OfficeModel(Db):
     def length_short(self,data):
         if len(data) > 4:
             return False
-    
+    def valid_office_type(self,data,office_type):
+        if office_type == data['state'] or office_type == data['federal'] or office_type == data['legislature'] or office_type== data['state'] :
+            return True
+        return False  
