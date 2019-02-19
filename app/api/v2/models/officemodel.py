@@ -27,12 +27,11 @@ class OfficeModel(Db):
   
     def find_by_id(self,office_id):     
         self.cursor.execute("SELECT * from offices WHERE office_id = {}".format(office_id))
-        party= self.cursor.fetchall()
-        return party
+        office = self.cursor.fetchall()
+        return office
     
-    def delete_by_id(self,office_id): 
-        self.cursor.find_by_id(office_id)    
-        self.cursor.execute("DELETE * from offices WHERE office_id = {}".format(office_id))
+    def delete_by_id(self,office_id):    
+        self.cursor.execute("DELETE FROM offices WHERE office_id = {}".format(office_id))
         self.connect.commit()
     
 
@@ -56,7 +55,10 @@ class OfficeModel(Db):
     def length_short(self,data):
         if len(data) > 4:
             return False
-    def valid_office_type(self,data,office_type):
-        if office_type == data['state'] or office_type == data['federal'] or office_type == data['legislature'] or office_type== data['state'] :
-            return True
-        return False  
+    def valid_office(self,data):
+        office_type = ['state','federal','legislature','local-community']
+        if data not in office_type:
+        # if data== ['state'] or data == ['federal'] or data == ['legislature'] or data == ['local-community'] :
+    
+            return False
+        return True

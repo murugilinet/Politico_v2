@@ -80,7 +80,7 @@ class AdminParties(Resource):
         address = data['address']
         logoUrl =data['logoUrl']
 
-        if self.admin.iamadmin(get_jwt_identity()):
+        if not self.admin.iamadmin(get_jwt_identity()):
             return make_response(jsonify({'Error': 'You are not an admin!'}), 403)
 
         if self.dt.find_by_name(name):
@@ -121,7 +121,7 @@ class AdminParty(Resource):
 
     @jwt_required
     def delete(self, party_id):
-        if self.admin.iamadmin(get_jwt_identity()):
+        if not self.admin.iamadmin(get_jwt_identity()):
             return make_response(jsonify({'Error': 'You are not an admin!'}), 403)
         party = self.dt.find_by_id(party_id)
         if party:
@@ -136,7 +136,7 @@ class AdminParty(Resource):
 
     @jwt_required
     def patch(self, party_id):
-        if self.admin.iamadmin(get_jwt_identity()):
+        if not self.admin.iamadmin(get_jwt_identity()):
             return make_response(jsonify({'Error': 'You are not an admin!'}), 403)
         data = parser2.parse_args()
         name = data['name']
