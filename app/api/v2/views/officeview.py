@@ -52,7 +52,7 @@ class Office(Resource):
             }),404)
        
         return make_response(jsonify({
-            'Message':'The office has been returned successfully returned',
+            'Message':'The office has been returned successfully',
             'data':office
         }),200)
 
@@ -83,9 +83,12 @@ class AdminOffices(Resource):
          
         if self.dt.valid_digits(age) == False: 
             return make_response(jsonify({ 'Message': 'Age input required',}),400)
-      
-        if self.dt.valid_type(office_type) == False:
+
+        if self.dt.valid_type(office_type) == False: 
             return make_response(jsonify({ 'Message': 'Office input required',}),400)
+      
+        if self.dt.valid_office(office_type) == False:
+            return make_response(jsonify({ 'Message': 'Invalid Office_type',}),422)
         
         if self.dt.valid_type(education) == False: 
             return make_response(jsonify({ 'Message': 'Education input required',}),400)
