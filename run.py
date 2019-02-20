@@ -9,6 +9,7 @@ app = create_app(os.getenv('APP_SETTINGS'))
 
 with app.app_context():
     Db().init_app(app)
+  #  print (Db().init_app(app).get_dsn_parameters())
     Db().create_tables()
     UserModel().create_admin()
 

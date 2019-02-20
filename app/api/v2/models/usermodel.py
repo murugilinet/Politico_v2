@@ -104,9 +104,15 @@ class UserModel(Db):
         if data.isalpha():
             return True
         return False
+    
+    def find_by_id(self,user_id):     
+        self.cursor.execute("SELECT * from users WHERE user_id = {}".format(user_id))
+        user = self.cursor.fetchall()
+        return user
 
     def valid_email(self, email):
         valid = re.match(
           "(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)", email.strip())
         if valid is None:
             return False
+
