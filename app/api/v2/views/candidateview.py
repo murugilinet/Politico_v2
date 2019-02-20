@@ -52,9 +52,9 @@ class AdminCandidate(Resource):
             return make_response(jsonify(
                 {'Error':'Office Not Found'}),404)
 
-        if not self.dt.exist_candidate(candidate):
+        if self.dt.exist_candidate(candidate,office):
             return make_response(jsonify(
-                {'Error':'Candidate already registerd'}),400)
+                {'Error':'Candidate already registered'}),400)
 
         if not self.par.find_by_id(party):
             return make_response(jsonify(

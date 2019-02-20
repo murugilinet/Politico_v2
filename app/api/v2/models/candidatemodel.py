@@ -13,10 +13,10 @@ class CandidateModel(Db):
             (office,party,candidate))
         self.connect.commit()
     
-    def exist_candidate(self,candidate):
+    def exist_candidate(self,candidate,office):
         
         self.cursor.execute(
-            "SELECT * from candidates WHERE candidate ={}".format(candidate))
+            "SELECT * from candidates WHERE candidate ={} and office ={}".format(candidate,office))
         politician = self.cursor.fetchall()
         return politician
 
