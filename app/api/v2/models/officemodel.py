@@ -58,7 +58,5 @@ class OfficeModel(Db):
     def valid_office(self,data):
         office_type = ['state','federal','legislature','local-community']
         if data not in office_type:
-        # if data== ['state'] or data == ['federal'] or data == ['legislature'] or data == ['local-community'] :
-    
             return False
         return True
