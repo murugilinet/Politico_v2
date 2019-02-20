@@ -13,7 +13,6 @@ services:
 before_script:
   - psql -c "CREATE DATABASE politico;" -U postgres
   - psql -c "CREATE DATABASE politicotest;" -U postgres
-  - psql -c "CREATE USER postgres WITH PASSWORD 'njaguara';" -U postgres
 
 env:
   - DATABASE_URL="postgres://postgres:njaguara@localhost:5432/politico" DATABASE_TEST_URL="dbname='politicotest' host='localhost' port='5432' user='postgres' password='njaguara'"
