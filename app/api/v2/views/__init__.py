@@ -4,7 +4,7 @@ from app.api.v2.views.officeview import Offices,Office,AdminOffices,AdminOffice
 from app.api.v2.views.partyview  import Parties,Party,AdminParties,AdminParty
 from app.api.v2.views.userview  import Users,LogIn
 from app.api.v2.views.candidateview import AdminCandidate
-from app.api.v2.views.voteview import VoteUser
+from app.api.v2.views.voteview import VoteUser,Results
 version_two = Blueprint('api_v2', __name__, url_prefix='/api/v2')
 
 api = Api(version_two)
@@ -21,4 +21,5 @@ api.add_resource (Users, '/auth/signup')
 api.add_resource (LogIn, '/auth/login')
 api.add_resource (AdminCandidate, '/office/<int:office_id>/register')
 api.add_resource (VoteUser, '/votes')
+api.add_resource (Results, '/offices/<int:office_id>/results')
 

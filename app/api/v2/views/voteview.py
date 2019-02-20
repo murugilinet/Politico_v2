@@ -28,11 +28,15 @@ class VoteUser(Resource):
     def post(self):
         data = parser5.parse_args()
         createdBy = data['createdBy']
+        candidate = data['candidate']
         office = data['office']
 
         if not self.admin.find_by_id(createdBy):
             return make_response(jsonify(
                 {'Message':'The User does not exist'}),403)
+        if not self.admin.find_by_id(candidate):
+            return make_response(jsonify(
+                {'Message':'The candidate does not exist'}),403)
 
         if self.admin.valid_digits(createdBy) == False:
             return make_response(jsonify(
@@ -50,6 +54,35 @@ class VoteUser(Resource):
             return make_response(jsonify(
                 {'Message':'You cannot vote twice'}),401)          
 
-        self.dt.save_vote(createdBy,office)
+        self.dt.save_vote(createdBy,candidate,office)
         return make_response(jsonify(
                 {'Message':'You have successfully cast your vote'}),200)
+   
+    @jwt_required             
+    def get(self):
+
+        if self.dt.get_all() == []:
+            return make_response(jsonify({
+                'Message': 'Successfully returned',
+                'data': self.dt.get_all()
+            }), 404)
+
+        else:
+            return make_response(jsonify({
+                'Message': 'Votes returned successfully',
+                'data': self.dt.get_all()
+            }), 200)
+
+
+class Results(Resource):
+    def __init__(self):
+        self.dt = VoteModel()
+
+    @jwt_required
+    def get(self,office_id):
+        return make_response(jsonify({
+                'Message': 'Votes returned successfully',
+                'data': self.dt.get_results(office_id)
+            }), 200)
+
+
