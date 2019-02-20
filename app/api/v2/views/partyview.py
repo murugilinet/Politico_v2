@@ -109,8 +109,9 @@ class AdminParties(Resource):
 
         if self.dt.length_short(abbreviations) == False:
             return make_response(jsonify({'Message': 'abbreviations too long'}), 411)
+
         self.dt.save_party(name,abbreviations,chairperson,members,address,logoUrl)
-        return make_response(jsonify({'Message': 'You have successsfully created a party'}), 201)
+        return make_response(jsonify({'Message': 'You have successfully created a party'}), 201)
 
 
 class AdminParty(Resource):
@@ -127,7 +128,7 @@ class AdminParty(Resource):
         if party:
             self.dt.delete_by_id(party_id)
             return make_response(jsonify({
-                'Message': 'You have successfully deleted a party',
+                'Message': 'You have successfully deleted the party',
             }), 200)
 
         return make_response(jsonify({
