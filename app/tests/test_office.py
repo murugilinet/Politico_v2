@@ -6,7 +6,7 @@ class OfficeTest(BaseTest):
     def test_create_office(self):
         response = self.register_office()
         result = json.loads(response.data)
-        self.assertEqual(result['Message'],'Successfully saved')
+        self.assertEqual(result['Message'],'You have successfully created an office')
         self.assertEqual(response.status_code,201)
 
     def test_no_name(self):
@@ -37,14 +37,14 @@ class OfficeTest(BaseTest):
         self.register_office()
         response = self.delete_by_id()
         result = json.loads(response.data)
-        self.assertEqual(result['Message'],'Office successfully deleted')
+        self.assertEqual(result['Message'],'You have successfully deleted the office')
         self.assertEqual(response.status_code,200)
 
     def test_get_all_offices(self):
         self.register_office()
         response = self.get_all()
         result = json.loads(response.data)
-        self.assertEqual(result['Message'],'Returned successfully')
+        self.assertEqual(result['Message'],'Offices returned successfully')
         self.assertEqual(response.status_code,200)
 
     def test_get_office_with_id(self):

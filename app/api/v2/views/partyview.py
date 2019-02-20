@@ -9,20 +9,20 @@ parser2.add_argument(
     "name", type=str, required=True, help="Name field is required"
 )
 parser2.add_argument(
-    "abbreviations", type=str, required=True, help="abbreviation field required"
+    "abbreviations", type=str, required=True, help="Abbreviation field required"
 )
 parser2.add_argument(
-    "chairperson", type=str, required=True, help="chairperson field required"
+    "chairperson", type=str, required=True, help="Chairperson field required"
 )
 
 parser2.add_argument(
-    "members", type=str, required=True, help="members field required"
+    "members", type=str, required=True, help="Members field required"
 )
 parser2.add_argument(
-    "address", type=str, required=True, help="address field required"
+    "address", type=str, required=True, help="Address field required"
 )
 parser2.add_argument(
-    "logoUrl", type=str, required=True, help="logo field required"
+    "logoUrl", type=str, required=True, help="Logo field required"
 )
 
 
@@ -36,13 +36,13 @@ class Parties(Resource):
 
         if self.dt.get_all() == []:
             return make_response(jsonify({
-                'Message': 'Successfully returned',
+                'Message': 'Parties successfully returned but no party has been created yet',
                 'data': self.dt.get_all()
             }), 404)
 
         else:
             return make_response(jsonify({
-                'Message': 'Returned successfully',
+                'Message': 'Parties successfully returned',
                 'data': self.dt.get_all()
             }), 200)
 
@@ -110,7 +110,7 @@ class AdminParties(Resource):
         if self.dt.length_short(abbreviations) == False:
             return make_response(jsonify({'Message': 'abbreviations too long'}), 411)
         self.dt.save_party(name,abbreviations,chairperson,members,address,logoUrl)
-        return make_response(jsonify({'Message': 'Successfully saved'}), 201)
+        return make_response(jsonify({'Message': 'You have successsfully created a party'}), 201)
 
 
 class AdminParty(Resource):
@@ -127,7 +127,7 @@ class AdminParty(Resource):
         if party:
             self.dt.delete_by_id(party_id)
             return make_response(jsonify({
-                'Message': 'Party successfully deleted',
+                'Message': 'You have successfully deleted a party',
             }), 200)
 
         return make_response(jsonify({
@@ -144,7 +144,7 @@ class AdminParty(Resource):
         if party:
             self.dt.updatename(party_id, name)
             return make_response(jsonify({
-                'Message': 'party successfully updated' 
+                'Message': 'You have successfully updated the party' 
             }), 200)
 
         return make_response(jsonify({

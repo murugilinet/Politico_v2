@@ -6,7 +6,7 @@ class PartyTest(BaseTest):
     def test_create_party(self):
          response = self.register_party()
          result = json.loads(response.data)
-         self.assertEqual(result['Message'],'Successfully saved')
+         self.assertEqual(result['Message'],'You have succesfully created a party')
          self.assertEqual(response.status_code,201)
     
     def test_party_exists(self):
@@ -28,7 +28,7 @@ class PartyTest(BaseTest):
         self.register_party()
         response = self.delete_party_by_id()
         result = json.loads(response.data)
-        self.assertEqual(result['Message'],'Party successfully deleted')
+        self.assertEqual(result['Message'],'You have successfully deleted the party')
         self.assertEqual(response.status_code,200)
 
     def test_missing_name(self):
@@ -59,7 +59,7 @@ class PartyTest(BaseTest):
         self.register_party()
         response = self.get_all_parties()
         result = json.loads(response.data)
-        self.assertEqual(result['Message'],'Returned successfully')
+        self.assertEqual(result['Message'],'Parties successfully returned')
         self.assertEqual(response.status_code,200)
 
 

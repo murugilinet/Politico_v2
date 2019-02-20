@@ -67,7 +67,7 @@ class BaseTest(unittest.TestCase):
         }
     
        
-        self.test_missing_name = {
+        self.test_missing_name1 = {
             'first_name':'',
             'last_name':'Murugi',
             'email':'murugilinet@gmail.com',
@@ -225,7 +225,7 @@ class BaseTest(unittest.TestCase):
     
     def missing_first_name(self):
         response = self.app.post('/api/v2/auth/signup',
-                                json = self.test_missing_name,
+                                json = self.test_missing_name1,
                                 headers = {'content-type': 'application/json'} )
         return response
     

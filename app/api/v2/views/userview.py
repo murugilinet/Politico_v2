@@ -62,7 +62,7 @@ class Users(Resource):
             return make_response(jsonify({'Error':'passwords do not match'}),401)
        
         self.dt.save_user(first_name, last_name, email, phone_number, username, password)
-        return make_response(jsonify({'Message': 'User saved'}),200)
+        return make_response(jsonify({'Message': 'You have successfully created an account'}),200)
 
 
  
