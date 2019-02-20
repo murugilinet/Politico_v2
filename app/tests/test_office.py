@@ -44,7 +44,7 @@ class OfficeTest(BaseTest):
         self.register_office()
         response = self.get_all()
         result = json.loads(response.data)
-        self.assertEqual(result['Message'],'Offices returned successfully')
+        self.assertEqual(result['Message'],'Offices successfully returned')
         self.assertEqual(response.status_code,200)
 
     def test_get_office_with_id(self):

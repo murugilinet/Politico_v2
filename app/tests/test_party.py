@@ -6,7 +6,7 @@ class PartyTest(BaseTest):
     def test_create_party(self):
          response = self.register_party()
          result = json.loads(response.data)
-         self.assertEqual(result['Message'],'You have succesfully created a party')
+         self.assertEqual(result['Message'],'You have successfully created a party')
          self.assertEqual(response.status_code,201)
     
     def test_party_exists(self):
