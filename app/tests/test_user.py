@@ -6,7 +6,7 @@ class UsersTest(BaseTest):
     def test_create_user(self):
         response = self.registration()
         result = json.loads(response.data)
-        self.assertEqual(result['Message'],'User saved')
+        self.assertEqual(result['Message'],'You have successfully created an account')
         self.assertEqual(response.status_code,200)
     
 

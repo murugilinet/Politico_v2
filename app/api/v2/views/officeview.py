@@ -28,13 +28,13 @@ class Offices(Resource):
        
         if self.dt.get_all() == []:    
             return make_response(jsonify({
-                    'Message':'Successfully returned',
+                    'Message':'Offices returned but no office has been created yet',
                     'data': self.dt.get_all
                 }),404)
        
         else:
             return make_response(jsonify({
-            'Message':'Returned successfully',
+            'Message':'Offices successfully returned',
             'data':self.dt.get_all()
             }),200)
 
@@ -101,7 +101,7 @@ class AdminOffices(Resource):
         self.dt.save_office(name,age,office_type,education)
       
         return make_response(jsonify({
-                'Message': 'Successfully saved',
+                'Message': 'You have successfully created an office',
              }),201)
 
 class AdminOffice(Resource):
@@ -121,7 +121,7 @@ class AdminOffice(Resource):
         if office:
             self.dt.delete_by_id(office_id)
             return make_response(jsonify({
-                'Message': 'Office successfully deleted',
+                'Message': 'You have successfully deleted the office',
             }), 200)
 
         return make_response(jsonify({
