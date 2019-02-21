@@ -29,7 +29,7 @@ class Offices(Resource):
         if self.dt.get_all() == []:    
             return make_response(jsonify({
                     'Message':'Offices returned but no office has been created yet',
-                    'data': self.dt.get_all
+                    'data': self.dt.get_all()
                 }),404)
        
         else:

@@ -31,7 +31,7 @@ class Parties(Resource):
     def __init__(self):
         self.dt = PartyModel()
     
-
+    @jwt_required
     def get(self):
 
         if self.dt.get_all() == []:
