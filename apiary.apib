@@ -7,7 +7,7 @@ Politico is an electoral system that allows users to vote.An admin can create,
 delete and edit a party as well as an office.Users can view  parties,offices
 ,results and cast their vote.
 
-## User create account [/auth/signup]
+## User create account [api/v2/auth/signup]
 
 ### SignUp[POST]
 To create an account and get registered as a user,You need to fill in the 
@@ -39,7 +39,7 @@ details
         }
 
 
-## Registered user login [/auth/login]
+## Registered user login [api/v2/auth/login]
          
 ### login [POST]
 You may login the system with your username and password if
@@ -67,7 +67,7 @@ you already have an account
         "Error":"No user by this username found"
         }
 
-## Collection of Parties [/parties]
+## Collection of Parties [api/v2/parties]
 
 ### create a new Party [POST]
 Admin may create a new party when you fill up the following details
@@ -127,7 +127,7 @@ All logged in users can view all parties
                        ]
             }
             
-## specific party [/parties/1]
+## specific party [api/v2/parties/1]
 
 ### get a specific party [GET]
 You may get a specific party with the party_id after login
@@ -240,7 +240,7 @@ fields in a party
             "Message":"Party not found"
              }
 
-## Collection of Offices [/offices]
+## Collection of Offices [api/v2/offices]
 
 ### create a new Office [POST]
 You may create a new office when you fill up the following details
@@ -301,7 +301,7 @@ All users who have logged in can view existing offices
                        ]
             }
             
-## specific party [/offices/1]
+## specific party [api/v2/offices/1]
 
 ### get a specific party [GET]
 You may get a specific party with the office_id after login
@@ -365,7 +365,7 @@ You may get a specific party with the office_id after login
             }  
 
 
-## Candidate interest [/offices/1/register]
+## Candidate interest [api/v2/offices/1/register]
 
 ### register a candidate [POST]
 Admin may register a candidate when you fill up the following details
@@ -402,7 +402,7 @@ Admin may register a candidate when you fill up the following details
             "Message":"Candidate already exist"
             }
 
-## Cast Vote [/votes]
+## Cast Vote [api/v2/votes]
 You may cast your vote for only one candidate in every office
 
 
@@ -440,7 +440,7 @@ You may cast your vote for only one candidate in every office
             "Message":"You cannot vote twice"
             }
 
-## View Results [/offices/1/results]
+## View Results [api/v2/offices/1/results]
 You may view the results of a particular office using the office_id
 
 ### vote [POST]
