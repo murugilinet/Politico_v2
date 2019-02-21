@@ -1,4 +1,16 @@
+
 # Politico_v2\ 
+Politico is an electoral system that enables citizen to vote for a candidate of their choice
+
+## Badges
+[![Build Status](https://travis-ci.org/murugilinet/Politico_v2.svg?branch=develop)](https://travis-ci.org/murugilinet/Politico_v2)
+[![Coverage Status](https://coveralls.io/repos/github/murugilinet/Politico_v2/badge.svg?branch=develop)](https://coveralls.io/github/murugilinet/Politico_v2?branch=develop)
+[![Maintainability](https://api.codeclimate.com/v1/badges/b4deecf1f8fe4c852eba/maintainability)](https://codeclimate.com/github/murugilinet/Politico_v2/maintainability)
+## Hosted app
+
+You can view the hosted app here [hosted](https://linet-politico2.herokuapp.com/)
+
+## Description
 Description of requirements to run the office,party and user endpoints on postman
 
         User sign up
@@ -36,6 +48,18 @@ Description of requirements to run the office,party and user endpoints on postma
         "address":"olevel", 
         "logoUrl:"olevel",  
         }
+       Voting
+        {
+	"createdBy":"1", 
+	"candidate":"1",
+        "office":"1"
+	} 
+       Candidate
+        {
+	"office":"1", 
+	"party":"1",
+        "candidate":"1"
+	} 
 
 ## Tools Used
 
@@ -43,18 +67,21 @@ Description of requirements to run the office,party and user endpoints on postma
 * Virtual Environment - used to create an isolated python environment
 
 ## Endpoints
-|   METHOD       |    URL                    | FUNCTION
-|  ------------  | ----------                |  ---------
-|   POST         | /api/v2/offices           |  create an office 
-|   POST         | /api/v2/parties           |  create a party
-|   GET          | /api/v2/offices           |  find all offices
-|   GET          | /api/v2/parties           |  find all parties
-|   GET          | /api/v2/offices/office_id |  find a specific office with the office_id
-|   GET          | /api/v2/parties/party_id  |  find a specific party with the party_id
-|   DELETE       | /api/v2/offices/office_id |  delete a specific office with the office_id
-|   DELETE       | /api/v2/parties/party_id  |  delete a specific party with  the party_id
-|   POST         | /api/v2/auth/signup       |  create an account or sign up
-|   POST         | /api/v2/auth/login        |  user log in
+|   METHOD       |    URL                                  | FUNCTION
+|  ------------  | ----------                              |  ---------
+|   POST         | /api/v2/offices                         |  create an office 
+|   POST         | /api/v2/parties                         |  create a party
+|   GET          | /api/v2/offices                         |  find all offices
+|   GET          | /api/v2/parties                         |  find all parties
+|   GET          | /api/v2/offices/office_id               |  find a specific office with the office_id
+|   GET          | /api/v2/parties/party_id                |  find a specific party with the party_id
+|   DELETE       | /api/v2/offices/office_id               |  delete a specific office with the office_id
+|   DELETE       | /api/v2/parties/party_id                |  delete a specific party with  the party_id
+|   POST         | /api/v2/auth/signup                     |  create an account or sign up
+|   POST         | /api/v2/auth/login                      |  user log in
+|   POST         | /api/v2/office/office_id/register       |  register a candidate
+|   POST         | /api/v2/vote                            |  cast a vote
+|   POST         | /api/v2/office/office_id/resul          |  view results of a particular office      
 
 
 ## Getting Started
@@ -105,5 +132,4 @@ Description of requirements to run the office,party and user endpoints on postma
 ## Open terminal and run:
 
      `flask run`
-
-        
+    
