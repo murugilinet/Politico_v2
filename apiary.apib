@@ -49,22 +49,26 @@ you already have an account
 + Request (application/json)
 
         {
-        "Username":"lynn",
-        "Password":"fifi"
+        
+        
+             "username":"lynn",
+             "password":"fifi"
+        
+        
         }
 
 + Response 201 (application/json)
 
         {
-        "Message":"Welcome lynn to politico",
-        "Token":"login_token",
-        "User":"user"
+            "Message":"Welcome lynn to politico",
+            "Token":"login_token",
+            "User":"user"
         }
 
 + Response 404 (application/json)
         
         {
-        "Error":"No user by this username found"
+            "Error":"No user by this username found"
         }
 
 ## Collection of Parties [/parties]
@@ -90,12 +94,13 @@ Admin may create a new party when you fill up the following details
             }
              
 + Response 201 (application/json)       
-
+    
             {
             "Message":"You have successfully created a party"
             }
 
 + Response 401 (application/json)
+
 
             {
             "Message":"Party already exist"
@@ -104,19 +109,19 @@ Admin may create a new party when you fill up the following details
 ### Get all parties [GET]
 All logged in users can view all parties
 
-+ Response 200 (application/json)
++ Request (application/json)
 
-    + Header
+    + Headers
     
-             Authorization: Bearer token
-
-    + Body
+            Authorization: Bearer token
+    
++ Response 200 (application/json)
     
             {
                "Message": "Parties successfully returned",
                "data": [
                   {
-                  "abbreviations": "19",
+                  "abbreviations": "umj",
                   "address": "mumo54",
                   "chairperson": "ali",
                   "first_name": "repreve",
@@ -127,68 +132,56 @@ All logged in users can view all parties
                        ]
             }
             
+            
 ## specific party [/parties/1]
 
 ### get a specific party [GET]
 You may get a specific party with the party_id after login
 
-+ Response 200 (application/json)
-
-    + Header 
-        
-            Authorisation: Bearer token 
-           
-    + Body
++ Request (application/json)
     
-            {
-            "Message": "The party has been returned successfully",
-            "data": [
-             {
-            "abbreviations": "19",
-            "address": "mumo54",
-            "chairperson": "ali",
-            "first_name": "repreve",
-            "logourl": "huho",
-            "members": "18",
-            "party_id": 1
-            }
-               ]
-                 }
-                 
-+ Response 404 (application/json)
-
-    + Header
+    + Headers
     
             Authorization: Bearer token
+            
++ Response 200 (application/json)
     
-    + Body
+            {
+               "Message": "Parties successfully returned",
+               "data": [
+                  {
+                  "abbreviations": "umj",
+                  "address": "mumo54",
+                  "chairperson": "ali",
+                  "first_name": "repreve",
+                  "logourl": "huho",
+                  "members": "18"
+                  }
+                       ]
+            }
+                 
++ Response 404 (application/json)
     
             {
             "Message":"Party not found"
             }           
 
 ### delete a specific party [DELETE]
-An admin can delete a party using the party id
+An admin can delete a party using the party id after loging in
 
-+ Response 200 (application/json)
++ Request (application/json)
 
-    + Header 
+    + Headers 
             
             Authorization: Bearer token
             
-    + Body
++ Response 201 (application/json)
     
             {
             "Message":"You have successfully deleted the party"
             }  
             
 + Response 404 (application/json)
-
-    + Header 
-            
-            Authorization: Bearer token
-            
-    + Body
     
              {
             "Message":"The party could not be found"
@@ -198,7 +191,7 @@ An admin can delete a party using the party id
 An admin can update the partyname by filling in a new name and maintaining all the other
 fields in a party
 
-+ Request (applcation/json)
++ Request (application/json)
 
     + Headers
      
@@ -218,23 +211,11 @@ fields in a party
 
 + Response 201 (application/json)
 
-    + Header 
-            
-            Authorization: Bearer token
-            
-    + Body
-    
             {
             "Message":"The party has successfully been updated"
             }  
             
 + Response 404 (application/json)
-
-    + Header 
-            
-            Authorization: Bearer token
-            
-    + Body
     
              {
             "Message":"Party not found"
@@ -260,7 +241,7 @@ You may create a new office when you fill up the following details
             "education":"Degree"
             }
              
-+ Response 201 (application/json)       
++ Response 201 (application/json)
 
             {
             "Message":"You have successfully created an office"
@@ -268,51 +249,47 @@ You may create a new office when you fill up the following details
 
 + Response 401 (application/json)
     
-    + Header
-            
-            Authorization: Bearer token
-    
-    + Body
-    
             {
-            "Message":"Office already exist"
+            "Message": "Office already exist"
             }
 
 ### Get all offices [GET]
 All users who have logged in can view existing offices
 
-+ Response 200 (application/json)
++ Request (application/json)
 
-    + Header
+    + Headers
     
              Authorization: Bearer token
 
-    + Body
++ Response 200 (application/json)
     
             {
                "Message": "Offices successfully returned",
                "data": [
                   {
-                  "name": "Governor",
+                  "name": "umj",
                   "age": "18",
                   "office_type": "state",
-                  "education": "Olevel"
+                  "education": "0level",
+                  "office_id": 1
                   }
-                       ]
+                     ]
             }
             
-## specific party [/offices/1]
+            
+## specific office [/offices/1]
 
-### get a specific party [GET]
-You may get a specific party with the office_id after login
+### get a specific office [GET]
+You may get a specific office with the office_id after login
+
++ Request (application/json)
+
+    + Headers
+            
+            Authorization: Bearer token
 
 + Response 200 (application/json)
-
-    + Header 
-        
-            Authorisation: Bearer token 
-           
-    + Body
     
             {
             "Message": "The party has been returned successfully",
@@ -322,17 +299,11 @@ You may get a specific party with the office_id after login
             "age": "35",
             "office_type": "state",
             "education": "Degree"
-            }
+              }
                ]
-                 }
+            }
                  
 + Response 404 (application/json)
-
-    + Header
-    
-            Authorization: Bearer token
-    
-    + Body
     
             {
             "Message":"Office not found"
@@ -340,35 +311,30 @@ You may get a specific party with the office_id after login
 
 ### delete a specific office [DELETE]
 
-+ Response 201 (application/json)
++ Request (application/json)
 
-    + Header 
+    + Headers
             
             Authorization: Bearer token
             
-    + Body
++ Response 200 (application/json)
     
             {
-            "Message":"The office has successfully been deleted"
+            "Message": "The office has successfully been deleted"
             }  
             
 + Response 404 (application/json)
-
-    + Header 
-            
-            Authorization: Bearer token
-            
-    + Body
     
              {
-            "Message":"Party not found"
+            "Message": "Office not found"
             }  
 
 
-## Candidate interest [/offices/1/register]
+## Candidate interest [/office/1/register]
 
 ### register a candidate [POST]
-Admin may register a candidate when you fill up the following details
+Admin may register a candidate when he fill up the following details when he
+is logged in
 
 + Request (application/json)
     
@@ -384,19 +350,13 @@ Admin may register a candidate when you fill up the following details
             "candidate":"1"
             }
              
-+ Response 201 (application/json)       
++ Response 201 (application/json) 
 
             {
             "Message":"You have successfully registered a candidate"
             }
 
 + Response 401 (application/json)
-    
-    + Header
-            
-            Authorization: Bearer token
-    
-    + Body
     
             {
             "Message":"Candidate already exist"
@@ -422,19 +382,13 @@ You may cast your vote for only one candidate in every office
             "office":"1"
             }
              
-+ Response 201 (application/json)       
++ Response 201 (application/json)
 
             {
             "Message":"You have successfully cast your vote"
             }
 
 + Response 401 (application/json)
-    
-    + Header
-            
-            Authorization: Bearer token
-    
-    + Body
     
             {
             "Message":"You cannot vote twice"
@@ -443,9 +397,16 @@ You may cast your vote for only one candidate in every office
 ## View Results [/offices/1/results]
 You may view the results of a particular office using the office_id
 
-### vote [POST]
+### results [GET]
              
-+ Response 201 (application/json)  
++ Request (application/json)  
+
+    + Headers
+    
+            Authorization: Bearer token
+    
++ Response 201 (application/json) 
+        
 
             {
             "Message": "Votes returned successfully",
